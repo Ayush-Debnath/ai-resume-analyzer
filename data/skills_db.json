@@ -1,0 +1,7 @@
+{
+  "programming": ["python", "java", "c++", "javascript"],
+  "data_science": ["machine learning", "deep learning", "nlp", "data analysis"],
+  "tools": ["tensorflow", "pytorch", "scikit-learn", "pandas", "numpy"],
+  "databases": ["sql", "mysql", "mongodb"],
+  "cloud": ["aws", "azure", "gcp"]
+}
