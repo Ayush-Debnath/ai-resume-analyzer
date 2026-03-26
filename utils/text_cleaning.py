@@ -1,12 +1,12 @@
-import re
-
 def clean_text(text):
+    import re
+
     text = text.lower()
 
-    # remove special characters
-    text = re.sub(r'[^a-zA-Z0-9\s]', ' ', text)
+    # replace common synonyms
+    text = text.replace("ml", "machine learning")
 
-    # remove extra spaces
+    text = re.sub(r'[^a-zA-Z0-9\s]', ' ', text)
     text = re.sub(r'\s+', ' ', text)
 
     return text.strip()
