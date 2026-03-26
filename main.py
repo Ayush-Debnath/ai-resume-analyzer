@@ -5,6 +5,7 @@ from backend.similarity_engine import compute_similarity
 from backend.skill_gap import compute_skill_gap
 from backend.ats_scorer import compute_ats_score
 from backend.job_recommender import recommend_jobs
+from backend.email_generator import generate_email
 
 if __name__ == "__main__":
     file_path = "data/sample_resume.pdf"
@@ -18,9 +19,11 @@ if __name__ == "__main__":
     job_data = parse_job_description(job_description)
     recommendations = recommend_jobs(resume_data["cleaned_text"])
 
+
     if resume_data:
         resume_skills = extract_skills(resume_data["cleaned_text"])
         job_skills = extract_skills(job_data["cleaned_text"])
+
 
         similarity_score = compute_similarity(
             resume_data["cleaned_text"],
@@ -35,6 +38,14 @@ if __name__ == "__main__":
             gap["missing_skills"]
         )
 
+        email = generate_email(
+            resume_skills,
+            gap["matched_skills"],
+            gap["missing_skills"],
+            "Data Scientist",
+            "Google"
+        )
+
         print("\n🧠 Resume Skills:", resume_skills)
         print("📌 Job Skills:", job_skills)
 
@@ -47,3 +58,6 @@ if __name__ == "__main__":
         print("\n🔥 Job Recommendations:\n")
         for job in recommendations:
             print(f"{job['company']} | {job['role']} | {job['score']}%")
+        
+        print("\n📧 Generated Email:\n")
+        print(email)

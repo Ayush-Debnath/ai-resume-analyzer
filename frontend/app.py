@@ -10,6 +10,7 @@ from backend.similarity_engine import compute_similarity
 from backend.skill_gap import compute_skill_gap
 from backend.ats_scorer import compute_ats_score
 from backend.job_recommender import recommend_jobs
+from backend.email_generator import generate_email
 
 st.set_page_config(page_title="AI Resume Analyzer", layout="wide")
 
@@ -66,3 +67,15 @@ if uploaded_file and job_description:
 
     for job in jobs:
         st.write(f"🏢 {job['company']} - {job['role']} → {job['score']}% match")
+    
+    st.subheader("📧 Generated HR Email")
+
+    email = generate_email(
+        resume_skills,
+        gap["matched_skills"],
+        gap["missing_skills"],
+        "Data Scientist",
+        "Google"
+    )
+
+    st.text_area("Email", email, height=300)
