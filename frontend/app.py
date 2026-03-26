@@ -9,6 +9,7 @@ from backend.job_parser import parse_job_description
 from backend.similarity_engine import compute_similarity
 from backend.skill_gap import compute_skill_gap
 from backend.ats_scorer import compute_ats_score
+from backend.job_recommender import recommend_jobs
 
 st.set_page_config(page_title="AI Resume Analyzer", layout="wide")
 
@@ -58,3 +59,10 @@ if uploaded_file and job_description:
         st.write("❌ Missing Skills", gap["missing_skills"])
 
     st.write("🧠 Resume Skills", resume_skills)
+
+    st.subheader("💼 Job Recommendations")
+
+    jobs = recommend_jobs(resume_data["cleaned_text"])
+
+    for job in jobs:
+        st.write(f"🏢 {job['company']} - {job['role']} → {job['score']}% match")

@@ -1,0 +1,17 @@
+[
+  {
+    "company": "Google",
+    "role": "Data Scientist",
+    "description": "Looking for Python, Machine Learning, SQL, Deep Learning experience."
+  },
+  {
+    "company": "Amazon",
+    "role": "ML Engineer",
+    "description": "Experience in Python, AWS, Machine Learning, Docker, and data pipelines."
+  },
+  {
+    "company": "Microsoft",
+    "role": "Data Analyst",
+    "description": "SQL, Excel, Power BI, Data Analysis, Python preferred."
+  }
+]

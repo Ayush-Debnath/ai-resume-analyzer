@@ -4,6 +4,7 @@ from backend.job_parser import parse_job_description
 from backend.similarity_engine import compute_similarity
 from backend.skill_gap import compute_skill_gap
 from backend.ats_scorer import compute_ats_score
+from backend.job_recommender import recommend_jobs
 
 if __name__ == "__main__":
     file_path = "data/sample_resume.pdf"
@@ -15,6 +16,7 @@ if __name__ == "__main__":
 
     resume_data = parse_resume(file_path)
     job_data = parse_job_description(job_description)
+    recommendations = recommend_jobs(resume_data["cleaned_text"])
 
     if resume_data:
         resume_skills = extract_skills(resume_data["cleaned_text"])
@@ -41,3 +43,7 @@ if __name__ == "__main__":
 
         print(f"\n🎯 Similarity Score: {similarity_score}%")
         print(f"📊 ATS Score: {ats_score}%")
+
+        print("\n🔥 Job Recommendations:\n")
+        for job in recommendations:
+            print(f"{job['company']} | {job['role']} | {job['score']}%")
