@@ -1,35 +1,36 @@
-def generate_email(resume_skills, matched_skills, missing_skills, job_role, company):
+from google import genai
+from config import GEMINI_API_KEY
 
-    intro = f"""
-Subject: Application for {job_role} Role at {company}
+client = genai.Client(api_key=GEMINI_API_KEY)
 
-Dear Hiring Manager,
+
+def generate_ai_email(resume_skills, matched_skills, missing_skills, job_role, company):
+
+    prompt = f"""
+You are an expert career assistant.
+
+Write a professional, personalized job application email.
+
+Context:
+- Role: {job_role}
+- Company: {company}
+- Candidate Skills: {resume_skills}
+- Matching Skills: {matched_skills}
+- Missing Skills: {missing_skills}
+
+Requirements:
+- Keep it concise and human-like
+- Sound confident but not arrogant
+- Mention strengths
+- Acknowledge improvement areas subtly
+- Make it impactful
+
+Generate email:
 """
 
-    body = f"""
-I hope you are doing well.
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt
+    )
 
-I am writing to express my interest in the {job_role} position at {company}. 
-With a strong background in {', '.join(resume_skills[:5])}, I believe I am a strong candidate for this role.
-
-My experience aligns well with your requirements, particularly in {', '.join(matched_skills)}.
-"""
-
-    improvement = ""
-    if missing_skills:
-        improvement = f"""
-I am also actively working on improving my skills in {', '.join(missing_skills)}, ensuring continuous growth and alignment with industry demands.
-"""
-
-    closing = """
-I would love the opportunity to contribute to your team and discuss how my skills can add value.
-
-Thank you for your time and consideration.
-
-Best regards,  
-[Your Name]
-"""
-
-    email = intro + body + improvement + closing
-
-    return email.strip()
+    return response.text
