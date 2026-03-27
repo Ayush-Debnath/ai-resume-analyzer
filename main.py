@@ -8,19 +8,27 @@ from backend.job_recommender import recommend_jobs
 # from backend.email_generator import generate_email
 from backend.email_generator import generate_ai_email
 from backend.job_scraper import scrape_jobs
+from backend.semantic_similarity import compute_semantic_similarity
 
 if __name__ == "__main__":
     file_path = "data/sample_resume.pdf"
 
     job_description = """
-    Looking for a Data Scientist with Python, Machine Learning, SQL,
-    Deep Learning, Docker, and AWS experience.
+    Bachelor's degree in Statistics, Mathematics, or related field.
+    Proficiency in SQL and data visualization tools (e.g., Tableau).
+    Strong analytical and problem-solving skills.
+    Knowledge of data mining techniques.
+    Ability to work independently and as part of a team.
+    Data Analysis SQL Data Visualization Tableau Data Mining
     """
 
     resume_data = parse_resume(file_path)
     job_data = parse_job_description(job_description)
     recommendations = recommend_jobs(resume_data["cleaned_text"])
     jobs = scrape_jobs("Full Stack Developer")
+    semantic_score = compute_semantic_similarity(
+    resume_data["cleaned_text"],
+    job_data["cleaned_text"])
 
 
     if resume_data:
@@ -28,9 +36,9 @@ if __name__ == "__main__":
         job_skills = extract_skills(job_data["cleaned_text"])
 
 
-        similarity_score = compute_similarity(
-            resume_data["cleaned_text"],
-            job_data["cleaned_text"]
+        similarity_score = compute_semantic_similarity(
+            " ".join(resume_skills),
+            " ".join(job_skills)
         )
 
         gap = compute_skill_gap(resume_skills, job_skills)
@@ -62,9 +70,11 @@ if __name__ == "__main__":
         for job in recommendations:
             print(f"{job['company']} | {job['role']} | {job['score']}%")
         
-        print("\n📧 Generated Email:\n")
-        print(email)
+        # print("\n📧 Generated Email:\n")
+        # print(email)
 
         print("\n🌍 Live Jobs:\n")
         for job in jobs:
-            print(job)       
+            print(job) 
+
+        print(f"\n🧠 Semantic Match Score: {semantic_score}%")      
