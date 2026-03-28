@@ -49,19 +49,19 @@ An AI-powered system that analyzes resumes, matches them with job descriptions, 
 ## 📸 Demo
 
 <p align="center">
-  <img src="projectscreenshots/Screenshot-2026-03-28-082006.png" width="700"/>
+  <img src="projectscreenshots/top.png" width="700"/>
 </p>
 
 <p align="center"><b>🖥️ UI</b></p>
 
 <p align="center">
-  <img src="projectscreenshots/Screenshot-2026-03-28-082035.png" width="700"/>
+  <img src="projectscreenshots/email.png" width="700"/>
 </p>
 
 <p align="center"><b>📧 Email Generator</b></p>
 
 <p align="center">
-  <img src="projectscreenshots/Screenshot-2026-03-28-082050.png" width="700"/>
+  <img src="projectscreenshots/improver.png" width="700"/>
 </p>
 
 <p align="center"><b>✨ Resume Improver</b></p>
