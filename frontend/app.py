@@ -1,6 +1,8 @@
 import sys
 import os
 
+from backend.ai_matcher import compute_ai_match
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import streamlit as st
 from backend.resume_parser import parse_resume
@@ -53,6 +55,16 @@ if uploaded_file and job_description:
         " ".join(resume_skills),
         " ".join(job_skills)
     )
+    ai_output = compute_ai_match(
+    resume_data["raw_text"],
+    job_description
+)
+
+    ai_score = ai_output["match_score"]
+    ai_reason = ai_output["reason"]
+
+
+    final_score = (0.6 * similarity_score) + (0.4 * ai_score)
 
     gap = compute_skill_gap(resume_skills, job_skills)
 
@@ -67,13 +79,13 @@ if uploaded_file and job_description:
     col1, col2 = st.columns(2)
 
     with col1:
-        st.metric("Match Score", f"{similarity_score}%")
+        st.metric("Match Score", f"{final_score}%")
 
     with col2:
         st.metric("ATS Score", f"{ats_score}%")
     
     st.progress(int(similarity_score))
-    st.write(f"Match Score: {similarity_score}%")
+    st.write(f"Match Score: {final_score}%")
 
     st.progress(int(ats_score))
     st.write(f"ATS Score: {ats_score}%")

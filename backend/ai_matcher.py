@@ -2,6 +2,7 @@ import streamlit as st
 from google import genai
 import os
 from dotenv import load_dotenv
+import json
 
 load_dotenv()
 
@@ -21,9 +22,11 @@ You are an expert recruiter.
 
 Evaluate how well the candidate matches the job.
 
-Return:
-1. Match Score (0-100)
-2. Short reasoning
+Return ONLY in JSON format:
+{{
+  "match_score": number (0-100),
+  "reason": "short explanation"
+}}
 
 Resume:
 {resume_text}
@@ -33,11 +36,23 @@ Job Description:
 """
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-pro",
         contents=prompt
     )
 
     try:
-        return response.text
+        text = response.text
     except:
-        return response.candidates[0].content.parts[0].text
+        text = response.candidates[0].content.parts[0].text
+
+    # 🔥 Parse JSON safely
+    try:
+        result = json.loads(text)
+    except:
+        # fallback if model messes up format
+        result = {
+            "match_score": 50,
+            "reason": text
+        }
+
+    return result

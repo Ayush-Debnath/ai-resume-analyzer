@@ -65,7 +65,13 @@ if __name__ == "__main__":
                 "Google"
             )
 
-        ai_score = 75  # extract later via parsing
+        ai_output = compute_ai_match(
+                    resume_data["raw_text"],
+                    job_description
+                )
+
+        ai_score = ai_output["match_score"]
+        ai_reason = ai_output["reason"]
 
 # 🔥 Final Hybrid Score
         final_score = (0.6 * semantic_score) + (0.4 * ai_score)
@@ -90,7 +96,10 @@ if __name__ == "__main__":
         for job in jobs:
             print(job) 
 
-        print(f"\n🧠 Semantic Match Score: {final_score}%")   
+        print(f"\n🧠 Semantic Match Score: {final_score}%")
+
+        print("\n🤖 AI Match Reason:")
+        print(ai_reason)
 
         print("\n🔥 Improved Resume:\n")
         print(improved[:1000])   
