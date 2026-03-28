@@ -12,6 +12,7 @@ from backend.ats_scorer import compute_ats_score
 from backend.job_recommender import recommend_jobs
 from backend.email_generator import generate_ai_email
 import matplotlib.pyplot as plt
+from backend.resume_improver import improve_resume
 
 st.set_page_config(page_title="AI Resume Analyzer", layout="wide")
 
@@ -122,4 +123,19 @@ if uploaded_file and job_description:
     )
 
     st.pyplot(fig)
+
+    st.subheader("✨ AI Resume Improver")
+
+    if st.button("Improve My Resume 🚀"):
+        with st.spinner("Enhancing your resume..."):
+            improved_text = improve_resume(resume_data["raw_text"])
+
+            st.text_area("Improved Resume", improved_text, height=400)
+    
+        st.download_button(
+        label="📥 Download Improved Resume",
+        data=improved_text,
+        file_name="improved_resume.txt",
+        mime="text/plain"
+        )
 

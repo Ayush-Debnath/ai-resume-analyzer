@@ -1,3 +1,4 @@
+import backend
 from backend.resume_parser import parse_resume
 from backend.skill_extractor import extract_skills
 from backend.job_parser import parse_job_description
@@ -9,6 +10,7 @@ from backend.job_recommender import recommend_jobs
 from backend.email_generator import generate_ai_email
 from backend.job_scraper import scrape_jobs
 from backend.semantic_similarity import compute_semantic_similarity
+from backend.resume_improver import improve_resume
 
 if __name__ == "__main__":
     file_path = "data/sample_resume.pdf"
@@ -29,6 +31,7 @@ if __name__ == "__main__":
     semantic_score = compute_semantic_similarity(
     resume_data["cleaned_text"],
     job_data["cleaned_text"])
+    improved = improve_resume(resume_data["raw_text"])
 
 
     if resume_data:
@@ -77,4 +80,7 @@ if __name__ == "__main__":
         for job in jobs:
             print(job) 
 
-        print(f"\n🧠 Semantic Match Score: {semantic_score}%")      
+        print(f"\n🧠 Semantic Match Score: {semantic_score}%")   
+
+        print("\n🔥 Improved Resume:\n")
+        print(improved[:1000])   

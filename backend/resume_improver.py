@@ -21,29 +21,21 @@ if not GEMINI_API_KEY:
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
-
-def generate_ai_email(resume_skills, matched_skills, missing_skills, job_role, company):
+def improve_resume(text):
 
     prompt = f"""
-You are an expert career assistant.
+You are an expert resume writer.
 
-Write a professional, personalized job application email.
+Improve the following resume content:
+- Make it professional and impactful
+- Use strong action verbs
+- Add measurable impact where possible
+- Keep it concise and ATS-friendly
 
-Context:
-- Role: {job_role}
-- Company: {company}
-- Candidate Skills: {resume_skills}
-- Matching Skills: {matched_skills}
-- Missing Skills: {missing_skills}
+Resume:
+{text}
 
-Requirements:
-- Keep it concise and human-like
-- Sound confident but not arrogant
-- Mention strengths
-- Acknowledge improvement areas subtly
-- Make it impactful
-
-Generate email:
+Return improved version:
 """
 
     response = client.models.generate_content(
