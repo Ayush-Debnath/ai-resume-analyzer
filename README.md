@@ -48,13 +48,30 @@ An AI-powered system that analyzes resumes, matches them with job descriptions, 
 
 ## 📸 Demo
 
-(Add screenshots here)
+<p align="center">
+  <img src="projectscreenshots/Screenshot-2026-03-28-082006.png" width="700"/>
+</p>
 
+<p align="center"><b>🖥️ UI</b></p>
+
+<p align="center">
+  <img src="projectscreenshots/Screenshot-2026-03-28-082035.png" width="700"/>
+</p>
+
+<p align="center"><b>📧 Email Generator</b></p>
+
+<p align="center">
+  <img src="projectscreenshots/Screenshot-2026-03-28-082050.png" width="700"/>
+</p>
+
+<p align="center"><b>✨ Resume Improver</b></p>
 ---
 
 ## 🚀 Live App
 
-👉 [Your Streamlit URL here]
+```bash
+(https://ai-resume-analyzer-h72uj8jrcc5mvgkcxzdbdg.streamlit.app/)
+```
 
 ---
 
