@@ -103,15 +103,24 @@ if uploaded_file and job_description:
 
     st.subheader("📧 Generated HR Email")
 
-    email = generate_ai_email(
-        resume_skills,
-        gap["matched_skills"],
-        gap["missing_skills"],
-        "Data Scientist",
-        "Google"
-    )
+    if st.button("Generate AI Email ✉️"):
+        with st.spinner("Generating personalized email..."):
 
-    st.text_area("Email", email, height=300)
+            email = generate_ai_email(
+            resume_data["raw_text"],
+            job_description,
+            "Target Role",   # you can improve later dynamically
+            "Target Company"
+        )
+
+        st.text_area("Generated Email", email, height=300)
+
+        st.download_button(
+            label="📥 Download Email",
+            data=email,
+            file_name="job_application_email.txt",
+            mime="text/plain"
+        )
 
     st.markdown("---")
 
@@ -126,16 +135,19 @@ if uploaded_file and job_description:
 
     st.subheader("✨ AI Resume Improver")
 
-    if st.button("Improve My Resume 🚀"):
-        with st.spinner("Enhancing your resume..."):
-            improved_text = improve_resume(resume_data["raw_text"])
+    if st.button("Improve Resume 🚀"):
+        with st.spinner("Optimizing your resume for this job..."):
 
-            st.text_area("Improved Resume", improved_text, height=400)
-    
-        st.download_button(
-        label="📥 Download Improved Resume",
-        data=improved_text,
-        file_name="improved_resume.txt",
-        mime="text/plain"
-        )
+            improved_resume = improve_resume(
+                resume_data["raw_text"],
+                job_description
+            )
 
+            st.text_area("Improved Resume", improved_resume, height=400)
+
+            st.download_button(
+                label="📥 Download Improved Resume",
+                data=improved_resume,
+                file_name="improved_resume.txt",
+                mime="text/plain"
+            )

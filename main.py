@@ -1,4 +1,5 @@
 import backend
+from backend.ai_matcher import compute_ai_match
 from backend.resume_parser import parse_resume
 from backend.skill_extractor import extract_skills
 from backend.job_parser import parse_job_description
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     semantic_score = compute_semantic_similarity(
     resume_data["cleaned_text"],
     job_data["cleaned_text"])
-    improved = improve_resume(resume_data["raw_text"])
+    improved = improve_resume(resume_data["raw_text"],job_description)
 
 
     if resume_data:
@@ -44,6 +45,11 @@ if __name__ == "__main__":
             " ".join(job_skills)
         )
 
+        ai_result = compute_ai_match(
+        resume_data["raw_text"],
+        job_data["raw_text"]
+        )
+
         gap = compute_skill_gap(resume_skills, job_skills)
 
         ats_score = compute_ats_score(
@@ -53,12 +59,16 @@ if __name__ == "__main__":
         )
 
         email = generate_ai_email(
-            resume_skills,
-            gap["matched_skills"],
-            gap["missing_skills"],
-            "Data Scientist",
-            "Google"
-        )
+                resume_data["raw_text"],
+                job_description,
+                "Data Scientist",
+                "Google"
+            )
+
+        ai_score = 75  # extract later via parsing
+
+# 🔥 Final Hybrid Score
+        final_score = (0.6 * semantic_score) + (0.4 * ai_score)
 
         print("\n🧠 Resume Skills:", resume_skills)
         print("📌 Job Skills:", job_skills)
@@ -80,7 +90,7 @@ if __name__ == "__main__":
         for job in jobs:
             print(job) 
 
-        print(f"\n🧠 Semantic Match Score: {semantic_score}%")   
+        print(f"\n🧠 Semantic Match Score: {final_score}%")   
 
         print("\n🔥 Improved Resume:\n")
         print(improved[:1000])   
